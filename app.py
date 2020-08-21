@@ -21,3 +21,12 @@ def list_todos():
 def get_todo(id):
   todo = Todo.query.get_or_404(id)
   return jsonify(todo=todo.serialize())
+
+# POST New Todo
+@app.route("/api/todos", methods=["POST"])
+def create_todo():
+  new_todo = Todo(title=request.json["title"])
+  db.session.add(new_todo)
+  db.session.commit()
+  response_json = jsonify(todo=new_todo.serialize())
+  return (response_json, 201)
