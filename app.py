@@ -10,6 +10,11 @@ app.config['SQLALCHEMY_ECHO'] = True
 
 connect_db(app)
 
+@app.route("/")
+def index_page():
+  todos = Todo.query.all()
+  return render_template("index.html", todos=todos)
+
 # GET All Todos
 @app.route("/api/todos")
 def list_todos():
